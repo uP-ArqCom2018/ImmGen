@@ -14,8 +14,7 @@ ARCHITECTURE Behavioral OF ImmGen_tb IS
     		len_o : integer);  -- Longitud de la instruccion de salida
     	PORT(
       		Inst_i : IN     std_logic_vector(len_i - 1 downto 0);  -- Instruccion de entrada
-      		Inmed_o : OUT    std_logic_vector(len_o - 1 downto 0);  -- Inmediato de salida  
-      		CLK_i: IN std_logic); -- clock
+      		Inmed_o : OUT    std_logic_vector(len_o - 1 downto 0));  -- Inmediato de salida  
 	end component;  
 	
 	CONSTANT In_width : integer := 32;  -- Longitud de palabra de entrada
@@ -23,26 +22,15 @@ ARCHITECTURE Behavioral OF ImmGen_tb IS
 	
 	SIGNAL Inst_i : std_logic_vector(In_width - 1 downto 0);
 	SIGNAL Inst_o : std_logic_vector(Out_width - 1 downto 0);
-	SIGNAL CLK_i: std_logic;
-	               
-	--constante que determina el periodo del clock
-   constant CLK_i_period : time := 20 ns;
+
 
 	
 BEGIN
 	
 	uut: ImmGen generic map(In_width, Out_width)
-				port map(Inst_i, Inst_o, CLK_i); 
+				port map(Inst_i, Inst_o); 
 				
-	proc_clk : PROCESS IS
-	BEGIN
-	  	CLK_i <= '0';
-		wait for CLK_i_period/2;
-		CLK_i <= '1';
-		wait for CLK_i_period/2;
-	   
-	END PROCESS proc_clk;
-	
+
 	estimulos : PROCESS IS
 	  -- Put declarations here.
 	BEGIN
